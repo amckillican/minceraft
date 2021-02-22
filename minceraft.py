@@ -3,18 +3,17 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()
 
-dirt = (load_texture("assets/block/dirt.png"), load_texture("assets/hotbar/dirt.png"))
-stone = (load_texture("assets/block/stone.png"), load_texture("assets/hotbar/stone.png"))
-bricks = (load_texture("assets/block/bricks.png"), load_texture("assets/hotbar/bricks.png"))
-andesite = (load_texture("assets/block/andesite.png"), load_texture("assets/hotbar/andesite.png"))
-granite = (load_texture("assets/block/granite.png"), load_texture("assets/hotbar/granite.png"))
-diorite = (load_texture("assets/block/diorite.png"), load_texture("assets/hotbar/diorite.png"))
-bedrock = (load_texture("assets/block/bedrock.png"), load_texture("assets/hotbar/bedrock.png"))
+dirt = (load_texture("assets/block/dirt.png"), load_texture("assets/hotbar/0.png"))
+stone = (load_texture("assets/block/stone.png"), load_texture("assets/hotbar/1.png"))
+bricks = (load_texture("assets/block/bricks.png"), load_texture("assets/hotbar/2.png"))
+andesite = (load_texture("assets/block/andesite.png"), load_texture("assets/hotbar/3.png"))
+granite = (load_texture("assets/block/granite.png"), load_texture("assets/hotbar/4.png"))
+diorite = (load_texture("assets/block/diorite.png"), load_texture("assets/hotbar/5.png"))
+bedrock = (load_texture("assets/block/bedrock.png"), load_texture("assets/hotbar/6.png"))
 sky_texture = load_texture("assets/skybox.png")
 arm_texture = load_texture("assets/arm/arm_texture.png")
 hotbar_texture = (dirt[1], stone[1], bricks[1], andesite[1], granite[1], diorite[1], bedrock[1])
-block_pick = 1
-
+block_pick = 0
 
 window.fps_counter.enabled = False
 window.exit_button.enabled = False
@@ -22,13 +21,13 @@ window.exit_button.enabled = False
 
 def update():
     global block_pick
-    if held_keys["1"]: block_pick = 1
-    if held_keys["2"]: block_pick = 2
-    if held_keys["3"]: block_pick = 3
-    if held_keys["4"]: block_pick = 4
-    if held_keys["5"]: block_pick = 5
-    if held_keys["6"]: block_pick = 6
-    if held_keys["7"]: block_pick = 7
+    if held_keys["1"]: block_pick = 0
+    if held_keys["2"]: block_pick = 1
+    if held_keys["3"]: block_pick = 2
+    if held_keys["4"]: block_pick = 3
+    if held_keys["5"]: block_pick = 4
+    if held_keys["6"]: block_pick = 5
+    if held_keys["7"]: block_pick = 6
 
     if held_keys["left mouse"] or held_keys["right mouse"]:
         hand.active()
@@ -49,19 +48,19 @@ class Voxel(Button):
     def input(self, key):
         if self.hovered:
             if key == "right mouse down":
-                if block_pick == 1:
+                if block_pick == 0:
                     voxel = Voxel(position=self.position + mouse.normal, texture=dirt[0])
-                elif block_pick == 2:
+                elif block_pick == 1:
                     voxel = Voxel(position=self.position + mouse.normal, texture=stone[0])
-                elif block_pick == 3:
+                elif block_pick == 2:
                     voxel = Voxel(position=self.position + mouse.normal, texture=bricks[0])
-                elif block_pick == 4:
+                elif block_pick == 3:
                     voxel = Voxel(position=self.position + mouse.normal, texture=andesite[0])
-                elif block_pick == 5:
+                elif block_pick == 4:
                     voxel = Voxel(position=self.position + mouse.normal, texture=granite[0])
-                elif block_pick == 6:
+                elif block_pick == 5:
                     voxel = Voxel(position=self.position + mouse.normal, texture=diorite[0])
-                elif block_pick == 7:
+                elif block_pick == 6:
                     voxel = Voxel(position=self.position + mouse.normal, texture=bedrock[0])
 
             if key == "left mouse down":
@@ -100,7 +99,7 @@ class Hotbar(Entity):
         super().__init__(
             parent=camera.ui,
             model="quad",
-            texture=hotbar_texture[block_pick-1],
+            texture=hotbar_texture[block_pick],
             scale=0.07,
             position=Vec2(0, -0.465),
             scale_x=.44)
